@@ -7,24 +7,45 @@ class lms {
 public:
     int bookid, price, copies;
     string title, author;
-    lms *next; // Remove 'temp' as it's not needed here
+    lms *next;
 
-    // Constructor to initialize next pointer to NULL
-    lms() : next(nullptr) {}
+    // Constructor to initialize next pointer to nullptr
+    lms() {
+        next = nullptr;
+    }
 
+    // Function to create a new record
     void create();
+
+    // Function to display all records
     void display();
+
+    // Function to search for a record by book id
     void search();
+
+    // Function to update a record
     void update();
+
+    // Function to delete a record
     void Delete();
+
+    // Function to save records to a file
     void saveToFile(string filename);
+
+    // Function to load records from a file
     void loadFromFile(string filename);
 };
 
-lms *start = NULL;
+// Global pointer to the start of the linked list
+lms *start = nullptr;
+
+// Function definitions
 
 void lms::create() {
-    lms *temp = new lms; // Create a new instance inside create() function
+    // Create a new record
+    lms *temp = new lms;
+
+    // Input record details from user
     cout << "Enter the records :\n";
     cout << "Book_id :";
     cin >> temp->bookid;
@@ -36,18 +57,21 @@ void lms::create() {
     cin >> temp->price;
     cout << "Copies :";
     cin >> temp->copies;
+
+    // Insert the new record at the beginning of the list
     temp->next = start;
     start = temp;
 }
 
 void lms::display() {
+    // Display all records in the list
     lms *temp = start;
-    if (temp == NULL) {
+    if (temp == nullptr) {
         cout << "List is empty\n";
     }
     else {
         cout << "BID\tNAME\tAUTHOR\tPRICE\tCOPIES\n";
-        while (temp != NULL) {
+        while (temp != nullptr) {
             cout << temp->bookid << "\t" << temp->title << "\t" << temp->author << "\t" << temp->price << "\t" << temp->copies << endl;
             temp = temp->next;
         }
@@ -55,11 +79,12 @@ void lms::display() {
 }
 
 void lms::search() {
+    // Search for a record by book id
     int bid, f = 0;
     cout << "Enter the book id you want to search:";
     cin >> bid;
     lms *temp = start;
-    while (temp != NULL) {
+    while (temp != nullptr) {
         if (temp->bookid == bid) {
             f = 1;
             cout << "Book Found!!!\n";
@@ -73,11 +98,12 @@ void lms::search() {
 }
 
 void lms::update() {
+    // Update a record by book id
     int bid, f = 0;
     cout << "Enter the book id you want to search:";
     cin >> bid;
     lms *temp = start;
-    while (temp != NULL) {
+    while (temp != nullptr) {
         if (temp->bookid == bid) {
             f = 1;
             cout << "Enter new details of book : " << endl;
@@ -104,6 +130,7 @@ void lms::update() {
 }
 
 void lms::Delete() {
+    // Delete a record by book id
     int id1;
     cout << "Enter the id to delete: ";
     cin >> id1;
@@ -131,9 +158,10 @@ void lms::Delete() {
 }
 
 void lms::saveToFile(string filename) {
+    // Save records to a file
     ofstream file(filename);
     lms *temp = start;
-    while (temp != NULL) {
+    while (temp != nullptr) {
         file << temp->bookid << " " << temp->title << " " << temp->author << " " << temp->price << " " << temp->copies << endl;
         temp = temp->next;
     }
@@ -142,13 +170,14 @@ void lms::saveToFile(string filename) {
 }
 
 void lms::loadFromFile(string filename) {
+    // Load records from a file
     ifstream file(filename);
     if (!file) {
         cout << "Error opening file " << filename << endl;
         return;
     }
-    start = NULL;
-    lms *prev = NULL;
+    start = nullptr;
+    lms *prev = nullptr;
     while (file >> bookid >> title >> author >> price >> copies) {
         lms *temp = new lms;
         temp->bookid = bookid;
@@ -156,13 +185,13 @@ void lms::loadFromFile(string filename) {
         temp->author = author;
         temp->price = price;
         temp->copies = copies;
-        if (start == NULL) {
+        if (start == nullptr) {
             start = temp;
         }
         else {
             prev->next = temp;
         }
-        temp->next = NULL;
+        temp->next = nullptr;
         prev = temp;
     }
     file.close();
@@ -177,6 +206,7 @@ int main() {
     l.loadFromFile(filename);
 
     do {
+        // Display menu
         cout << "\n1. Accept the records\n";
         cout << "2. Display the records\n";
         cout << "3. Search the records\n";
@@ -187,9 +217,11 @@ int main() {
         cout << "Enter your choice: ";
         cin >> ch;
 
+        // Perform action based on user choice
         switch (ch) {
             case 1:
                 l.create();
+                // Prompt for adding more records
                 while (true) {
                     cout << "Do you want to add more records? Y/N";
                     cin >> x;
