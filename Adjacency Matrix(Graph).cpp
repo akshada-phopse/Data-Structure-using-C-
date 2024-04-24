@@ -1,7 +1,7 @@
 #include<iostream>
 #include<string>
 using namespace std;
-class AdjecancyMatrix
+class AdjacencyMatrix
 {
     public:
     int vertex,edge,fuel,a[30][30];
@@ -9,7 +9,7 @@ class AdjecancyMatrix
     void create();
     void display();
 };
-void AdjecancyMatrix::create()
+void AdjacencyMatrix::create()
 {
     cout<<"Enter Number of Cities : ";
     cin>>vertex;
@@ -36,7 +36,7 @@ void AdjecancyMatrix::create()
         }
     }
 }
-void AdjecancyMatrix::display()
+void AdjacencyMatrix::display()
 {
     cout<<"***Adjecancy Matrix***\n";
     for(int i=0;i<vertex;i++)
@@ -56,7 +56,7 @@ void AdjecancyMatrix::display()
 }
 int main()
 {
-    AdjecancyMatrix AM;
+    AdjacencyMatrix AM;
     AM.create();
     AM.display();
     return 0;
